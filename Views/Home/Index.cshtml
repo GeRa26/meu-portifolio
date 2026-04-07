@@ -1,0 +1,129 @@
+@model DevPortfolio.Models.PortfolioViewModel
+
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+
+<!-- Hero Section -->
+<section id="home" class="hero">
+    <div class="container hero-container-flex">
+        <div class="hero-content">
+            <h1>Prazer, me chamo<br><span>@Model.Name</span></h1>
+            <h2>@Model.Title</h2>
+            <p>@Model.AboutMe</p>
+            <div style="display: flex; gap: 15px; margin-top: 2rem;">
+                <a href="#projects" class="btn btn-primary">Ver Projetos</a>
+                <a href="@Model.CvFileUrl" class="btn" download>Baixar CV</a>
+            </div>
+        </div>
+        <div class="hero-image-wrapper">
+            <img src="~/images/perfil.jpg" alt="Foto de @Model.Name" class="hero-profile-img" />
+        </div>
+    </div>
+</section>
+
+<!-- About Section -->
+<section id="about" class="about" style="padding: 100px 0; background: rgba(31, 40, 51, 0.3);">
+    <div class="container">
+        <h2>Sobre Mim</h2>
+        <div style="max-width: 800px;">
+            <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-primary);">
+                @Model.AboutMeExtended
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- Experience Section -->
+<section id="experience" class="experience" style="padding: 100px 0;">
+    <div class="container">
+        <h2>Experiência Profissional</h2>
+        <div class="timeline" style="margin-top: 40px; display: flex; flex-direction: column; gap: 30px;">
+            @foreach (var exp in Model.Experiences)
+            {
+                <div class="timeline-item" style="background: var(--card-bg); border-left: 4px solid var(--accent-color); padding: 25px; border-radius: 4px; backdrop-filter: blur(10px);">
+                    <h3 style="color: var(--accent-color); margin-bottom: 5px;">@exp.Role</h3>
+                    <div style="font-weight: 600; margin-bottom: 15px; display: flex; justify-content: space-between; flex-wrap: wrap;">
+                        <span>🏢 @exp.Company</span>
+                        <span style="color: var(--accent-dark);">📅 @exp.Period</span>
+                    </div>
+                    <p>@exp.Description</p>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Projects Section -->
+<section id="projects" class="projects">
+    <div class="container">
+        <h2>Meus Projetos</h2>
+        <div class="projects-grid">
+            @foreach (var project in Model.Projects)
+            {
+                <div class="project-card">
+                    <img src="@project.ImageUrl" alt="@project.Title" class="project-img" />
+                    <div class="project-info">
+                        <h3>@project.Title</h3>
+                        <p>@project.Description</p>
+                        <div class="project-tags">
+                            @foreach (var tech in project.Technologies)
+                            {
+                                <span class="tag">@tech</span>
+                            }
+                        </div>
+                        <div class="project-links">
+                            <a href="@project.GithubUrl" target="_blank">💻 GitHub</a>
+                            <a href="@project.LiveUrl" target="_blank">🌐 Live Demo</a>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Skills Section -->
+<section id="skills" class="skills">
+    <div class="container">
+        <h2 style="text-align: center; display: block; margin-bottom: 50px;">Habilidades Tecnológicas</h2>
+        <div class="skills-grid">
+            @foreach (var category in Model.SkillCategories)
+            {
+                <div class="skills-category-card">
+                    <h3 class="skills-category-title">@category.Title</h3>
+                    <div class="tech-icons-grid">
+                        @foreach (var skill in category.Skills)
+                        {
+                            <div class="tech-icon-box" title="@skill.Name">
+                                <i class="@skill.DeviconClass"></i>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</section>
+
+<!-- Contact Section -->
+<section id="contact" class="contact" style="padding: 100px 0; background: rgba(31, 40, 51, 0.3);">
+    <div class="container" style="text-align: center;">
+        <h2>Entre em Contato</h2>
+        <p style="max-width: 600px; margin: 0 auto 30px auto; font-size: 1.1rem;">
+            Estou sempre aberto a novas oportunidades e pronto para colaborar em projetos inovadores. 
+            Mande uma mensagem e vamos conversar!
+        </p>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <a href="mailto:@Model.Email" class="btn btn-primary" style="display: flex; align-items: center; gap: 10px;">
+                ✉️ @Model.Email
+            </a>
+            <a href="@Model.LinkedInUrl" target="_blank" class="btn" style="display: flex; align-items: center; gap: 10px;">
+                🔗 LinkedIn
+            </a>
+        </div>
+    </div>
+</section>

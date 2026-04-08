@@ -11,12 +11,12 @@
 <section id="home" class="hero">
     <div class="container hero-container-flex">
         <div class="hero-content">
-            <h1>Prazer, me chamo<br><span>@Model.Name</span></h1>
+            <h1>@ViewBag.UI["HeroGreeting"]<br><span>@Model.Name</span></h1>
             <h2>@Model.Title</h2>
             <p>@Model.AboutMe</p>
             <div style="display: flex; gap: 15px; margin-top: 2rem;">
-                <a href="#projects" class="btn btn-primary">Ver Projetos</a>
-                <a href="@Model.CvFileUrl" class="btn" download>Baixar CV</a>
+                <a href="#projects" class="btn btn-primary">@ViewBag.UI["BtnProjects"]</a>
+                <a href="@Model.CvFileUrl" class="btn" download>@ViewBag.UI["BtnDownloadCV"]</a>
             </div>
         </div>
         <div class="hero-image-wrapper">
@@ -28,7 +28,7 @@
 <!-- About Section -->
 <section id="about" class="about" style="padding: 100px 0; background: rgba(31, 40, 51, 0.3);">
     <div class="container">
-        <h2>Sobre Mim</h2>
+        <h2>@ViewBag.UI["TitleAbout"]</h2>
         <div style="max-width: 800px;">
             <p style="font-size: 1.1rem; line-height: 1.8; color: var(--text-primary);">
                 @Model.AboutMeExtended
@@ -40,7 +40,7 @@
 <!-- Experience Section -->
 <section id="experience" class="experience" style="padding: 100px 0;">
     <div class="container">
-        <h2>Experiência Profissional</h2>
+        <h2>@ViewBag.UI["TitleExperience"]</h2>
         <div class="timeline" style="margin-top: 40px; display: flex; flex-direction: column; gap: 30px;">
             @foreach (var exp in Model.Experiences)
             {
@@ -60,7 +60,7 @@
 <!-- Projects Section -->
 <section id="projects" class="projects">
     <div class="container">
-        <h2>Meus Projetos</h2>
+        <h2>@ViewBag.UI["TitleProjects"]</h2>
         <div class="projects-grid">
             @foreach (var project in Model.Projects)
             {
@@ -89,7 +89,7 @@
 <!-- Skills Section -->
 <section id="skills" class="skills">
     <div class="container">
-        <h2 style="text-align: center; display: block; margin-bottom: 50px;">Habilidades Tecnológicas</h2>
+        <h2 style="text-align: center; display: block; margin-bottom: 50px;">@ViewBag.UI["TitleSkills"]</h2>
         <div class="skills-grid">
             @foreach (var category in Model.SkillCategories)
             {
@@ -99,7 +99,14 @@
                         @foreach (var skill in category.Skills)
                         {
                             <div class="tech-icon-box" title="@skill.Name">
-                                <i class="@skill.DeviconClass"></i>
+                                @if (skill.DeviconClass.StartsWith("http"))
+                                {
+                                    <img src="@skill.DeviconClass" alt="@skill.Name" style="width: 3.5rem; height: 3.5rem;" />
+                                }
+                                else
+                                {
+                                    <i class="@skill.DeviconClass"></i>
+                                }
                             </div>
                         }
                     </div>
@@ -112,14 +119,13 @@
 <!-- Contact Section -->
 <section id="contact" class="contact" style="padding: 100px 0; background: rgba(31, 40, 51, 0.3);">
     <div class="container" style="text-align: center;">
-        <h2>Entre em Contato</h2>
+        <h2>@ViewBag.UI["TitleContact"]</h2>
         <p style="max-width: 600px; margin: 0 auto 30px auto; font-size: 1.1rem;">
-            Estou sempre aberto a novas oportunidades e pronto para colaborar em projetos inovadores. 
-            Mande uma mensagem e vamos conversar!
+            @ViewBag.UI["ContactText"]
         </p>
         <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
             <a href="mailto:@Model.Email" class="btn btn-primary" style="display: flex; align-items: center; gap: 10px;">
-                ✉️ @Model.Email
+                ✉️ @ViewBag.UI["BtnEmail"]
             </a>
             <a href="@Model.LinkedInUrl" target="_blank" class="btn" style="display: flex; align-items: center; gap: 10px;">
                 🔗 LinkedIn

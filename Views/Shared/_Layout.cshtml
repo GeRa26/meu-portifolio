@@ -10,14 +10,31 @@
 </head>
 <body>
     <header>
-        <nav class="container">
-            <a class="logo" asp-area="" asp-controller="Home" asp-action="Index">Dev.</a>
+        <nav class="container" style="display: flex; justify-content: space-between; align-items: center; position: relative;">
+            <a class="logo" asp-area="" asp-controller="Home" asp-action="Index" style="z-index: 1000;">Portfólio.</a>
+            <div class="mobile-menu-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
             <ul class="nav-links">
-                <li><a href="#about">Sobre Mim</a></li>
-                <li><a href="#experience">Experiência</a></li>
-                <li><a href="#projects">Projetos</a></li>
-                <li><a href="#skills">Habilidades</a></li>
-                <li><a href="#contact">Contato</a></li>
+                <li><a href="#about">@ViewBag.UI["NavAbout"]</a></li>
+                <li><a href="#experience">@ViewBag.UI["NavExperience"]</a></li>
+                <li><a href="#projects">@ViewBag.UI["NavProjects"]</a></li>
+                <li><a href="#skills">@ViewBag.UI["NavSkills"]</a></li>
+                <li><a href="#contact">@ViewBag.UI["NavContact"]</a></li>
+                <li style="display: flex; gap: 10px; margin-left: 10px; align-items: center;">
+                    @{
+                        var targetLang = ViewBag.Lang == "en" ? "pt" : "en";
+                        var currentLangLabel = ViewBag.Lang == "en" ? "EN" : "PT";
+                    }
+                    <a href="?lang=@targetLang" title="Mudar Idioma" class="header-action-btn">
+                        @currentLangLabel
+                    </a>
+                    <button id="theme-toggle" title="Alternar Modo Escuro/Claro" class="header-action-btn">
+                        ☀️
+                    </button>
+                </li>
             </ul>
         </nav>
     </header>
@@ -28,7 +45,7 @@
 
     <footer>
         <div class="container">
-            <p>&copy; @DateTime.Now.Year - Desenvolvido com ASP.NET Core & ❤️</p>
+            <p>&copy; @DateTime.Now.Year - @ViewBag.UI["FooterText"]</p>
         </div>
     </footer>
 
